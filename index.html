@@ -25,18 +25,21 @@
 			<!--button type="button no-border" class="btn">Home</button-->
 			<a class="btn btn-large btn-primary" href="#"> home </a>
 			<div class="btn-group">
-				<div class="button">
+				<div class="button" ng-keydown="onKeydown(item, $event)" key-trap>
 
 					<a class="btn btn-large btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
 						menu
 						<span class="glyphicon glyphicon-chevron-down"></span>
 					</a>
 
-					<ul class="dropdown-menu">
+					<ul class="dropdown-menu" >
 						<input type="text" ng-model="search.title" my-input>
 
         				<li ng-repeat="item in data | filter:search.title"
-            		    ng-bind-html="item.title | searchfilter:search.title">
+            		    ng-bind-html="item.title | searchfilter:search.title"
+            		    ng-class="{'record-highlight': $index == focusIndex }"
+            		    >
+
         				</li>
 					</ul>
 				</div>	

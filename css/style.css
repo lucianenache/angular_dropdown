@@ -11,6 +11,22 @@ li, input[type=text] {
    background-color: yellow;
 }
 
+.record {
+    ´sheight: 25px;
+    
+    smargin: 10px;
+    spadding: 10px;
+    swidth: 200px;
+}
+.record-highlight {
+    sheight: 50px;
+    background-color: lightgray;
+    smargin: 10px;
+    spadding: 10px;
+    swidth: 200px;
+    solor: #fff;
+}
+
 
 
 /* override bootsrap lame borders and radius on the buttons */
