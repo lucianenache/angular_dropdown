@@ -34,12 +34,9 @@
 					<ul class="dropdown-menu">
 						<input type="text" ng-model="search.title" my-input>
 
-        				<!-- with filter -->
         				<li ng-repeat="item in data | filter:search.title"
             		    ng-bind-html="item.title | searchfilter:search.title">
         				</li>
-
-						<li ng-repeat="item in data | filter:search.title" ng-bind-html="item.title | searchfilter:search.name" ng-click="console.log('clicked')">{{ item.title }}</li>
 					</ul>
 				</div>	
 			</div>	
