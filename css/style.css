@@ -27,6 +27,9 @@ li, input[type=text] {
     solor: #fff;
 }
 
+h4 {
+    color:#000;
+}
 
 
 /* override bootsrap lame borders and radius on the buttons */

@@ -22,30 +22,41 @@
 		<span>PODIO</span>
 		<div class="btn-group">
 
-			<!--button type="button no-border" class="btn">Home</button-->
+			
 			<a class="btn btn-large btn-primary" href="#"> home </a>
-			<div class="btn-group">
-				<div class="button" ng-keydown="onKeydown(item, $event)" key-trap>
 
-					<a class="btn btn-large btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+
+			
+				<div class="btn-group" >
+				<div class="button" key-trap>
+
+					<a class="btn btn-large btn-primary dropdown-toggle" ng-click="displayFirst()" data-toggle="dropdown" href="#">
 						menu
 						<span class="glyphicon glyphicon-chevron-down"></span>
 					</a>
 
-					<ul class="dropdown-menu" >
+					<ul class="dropdown-menu" role="menu" >
 						<input type="text" ng-model="search.title" my-input>
+						
+						<ul ng-repeat="b in data" >
+							<h4 >{{b.header}}</h4>
+							
+							<ul >
+							<li ng-repeat="item in b.items | filter:search.title"
+							  ng-keydown="onKeydown(item, $event, $parent.$index)"
+							ng-bind-html="item.title | searchfilter:search.title"
+							ng-class="{'record-highlight': ($parent.$index == currentParent(focusIndex,$index) && $index == focusIndex)}"
+							ng-click="open($parent.$index,$index)">
+							</li>
+							</ul>
 
-        				<li ng-repeat="item in data | filter:search.title"
-            		    ng-bind-html="item.title | searchfilter:search.title"
-            		    ng-class="{'record-highlight': $index == focusIndex }"
-            		    >
-
-        				</li>
-					</ul>
-				</div>	
+					</ul>	
+				</ul>
 			</div>	
-		</div>
-	</div><!-- /.container -->
-	<script src="js/menuApp.js"></script>
+			<!-- end second test -->	
+		</div>	
+	</div>
+</div><!-- /.container -->
+<script src="js/menuApp.js"></script>
 </body>
 </html>
