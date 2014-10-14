@@ -9,25 +9,27 @@ li, input[type=text] {
 
 }
 
+input[type=text] {
+    width:100%;!important
+}
+
 ul {
     list-style:none;
 }
+
+td{
+    border-left: 1px solid #ccc;
 }
+
 
 .highlighted {
    background-color: yellow;
 }
 
-.record {
-    ´sheight: 25px;
-    
-    smargin: 10px;
-    spadding: 10px;
-    swidth: 200px;
-}
+
 .record-highlight {
     sheight: 50px;
-    background-color: lightgray;
+    background-color: #C9CDF0;
     smargin: 10px;
     spadding: 10px;
     swidth: 200px;
@@ -35,7 +37,7 @@ ul {
 }
 
 h4 {
-    color:#000;
+ 
 
 }
 
@@ -58,7 +60,7 @@ h4 {
 .table { color:#000;}
 
 #orga-id{
-
+       color:#646FE8;
     font-weight:bold;
 }
 
