@@ -1,10 +1,17 @@
 li:hover{
 	background-color: lightgray;
+      cursor: pointer;   
 
 }
 
 li, input[type=text] {
 	color:#000;
+
+}
+
+ul {
+    list-style:none;
+}
 }
 
 .highlighted {
@@ -29,6 +36,7 @@ li, input[type=text] {
 
 h4 {
     color:#000;
+
 }
 
 
@@ -46,6 +54,18 @@ h4 {
 	border-radius: 0px;
 	border: 0px;
 }
+
+.table { color:#000;}
+
+#orga-id{
+
+    font-weight:bold;
+}
+
+.content {
+    font-weight:normal;
+}
+
 
 /* use these colors */
 

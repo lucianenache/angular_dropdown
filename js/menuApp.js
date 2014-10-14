@@ -1,17 +1,29 @@
 'use strict';
-angular.module('menuApp', ['menuApp.controllers', 'menuApp.directives' ,'ngSanitize']);
+angular.module('menuApp', ['menuApp.services', 'menuApp.controllers', 'menuApp.directives' ,'ngSanitize']);
 
-angular.module('menuApp.controllers', []).controller('menuController', function($scope) {
+angular.module('menuApp.controllers', []).controller('menuController', function($scope,menuService) {
 
   $scope.focusIndex = 0;
 
-  $scope.open = function (i,j){console.log(i,j);} 
+
+
+    menuService.loadOutput(function(dataResponse) {
+        $scope.data = dataResponse;
+        //console.log("inside service",JSON.stringify(datai));
+    });
+
+  $scope.open = function (i,j){
+    console.log("called item: "+$scope.data[j].spaces[i].name);
+  } 
+
   $scope.displayFirst = function() {$scope.focusIndex = 0;}
   
+
+   
   //$scope.onKeydown = function(item, $event, outerIndex){ console.log(item,outerIndex)};
   /* refactor this one*/
   $scope.keys = [];
-  $scope.keys.push({ code: 13, action: function() { $scope.open( $scope.focusIndex ); }});
+  $scope.keys.push({ code: 13, action: function() { $scope.open($scope.focusIndex,$scope.parInd); }});
   $scope.keys.push({ code: 38, action: function() { $scope.focusIndex--; }});
   $scope.keys.push({ code: 40, action: function() { $scope.focusIndex++; }});
   
@@ -23,72 +35,50 @@ angular.module('menuApp.controllers', []).controller('menuController', function(
       $scope.$apply();
     });
   });
+    
   
+  $scope.filteredArrays = [];
 
-  var d = [
-  {
-    header:"title1",  
-    items :[
-    { title: "Bad" },
-    { title: "Good" },
-    { title: "Great" },
-    { title: "Cool" },
-    { title: "Excellent" },
-    { title: "Awesome" },
-    { title: "Horrible" },
-    ]
-  },
-  {
-    header:"title2",  
-    items :[
-    { title: "Bad" },
-    { title: "Good" },
-    { title: "Great" },
-    { title: "Cool" },
-    { title: "Excellent" },
-    { title: "Awesome" },
-    { title: "Horrible" },
-    ]
-  }
-  ];
-  
-  
-  
-  $scope.data = d;
+  //$scope.data = d;
+
   var par = 0;
-  var parMax = d.length-1;
+ 
   
   $scope.currentParent = function (j,k){
-    console.log( $scope.focusIndex,par,d[par].items.length,parMax);
     
+    var parMax =  $scope.filteredArrays.length-1;
+    console.log( $scope.focusIndex,par, $scope.filteredArrays[par].length,parMax);
+    // f p l m 
+    // 0 0 2 1
+    // 1 0 2 1
+    //console.log("filtered array",$scope.filteredArrays[par].length);
+    //var j = $scope.filteredArrays[par].length -1;
 
     if(j < 0 && par > 0){
-      $scope.focusIndex = d[par-1].items.length-1;
+      $scope.focusIndex = $scope.filteredArrays[par-1].length-1;
+      console.log($scope.filteredArrays[par-1].length);console.log("enter 1");
       par -=1;
       return par;
     } else
     if(j < 0 && par === 0){
-      $scope.focusIndex = d[parMax].items.length-1;
-      par = parMax;
+      $scope.focusIndex = $scope.filteredArrays[parMax].length-1;
+      par = parMax;console.log("enter 2");
       return par;
     } else 
-    if(par==parMax && j > d[parMax].items.length-1){
-      par = 0;
+    if(par==parMax && j > $scope.filteredArrays[parMax].length-1){
+      par = 0;console.log("enter 3");
       $scope.focusIndex = 0;
       return par;
     }else
-    if(j==$scope.data[par].items.length){
+    if(j==$scope.filteredArrays[par].length){
+      console.log("enter 4");
       $scope.focusIndex = 0;
       par +=1;
       return par;
     } 
-    
+    $scope.parInd = par;
     return par;
   }
-  var totalIndex = function(){
-    return 14;
-  }
-
 });
 
 
@@ -111,6 +101,34 @@ angular.module('menuApp.directives').directive('keyTrap', function() {
   };
 }); 
 
+angular.module('menuApp').filter('order', function() {
+
+ return function(array, scope, string, parentIndex) {
+  //console.log(scope,array,string,parentIndex);
+  var filteredArray = []; 
+
+  if(string !== null && string !== undefined){
+
+    for(var i=0; i< array.length; i++ ){
+     // console.log("i and string: ",i,string);
+
+      if(array[i].name.indexOf(string) !== -1){
+
+        filteredArray.push(array[i]);
+      }
+    }
+  } else {
+    filteredArray = array;
+  }
+
+  //console.log(parentIndex + ":filteredArray",filteredArray);
+  //scope.focusIndex = filteredArrays[];
+  scope.filteredArrays[parentIndex] = filteredArray;
+
+  return filteredArray;
+}
+}); 
+
 angular.module('menuApp').filter('searchfilter', function($sce) {
 
  return function(text, phrase) {
@@ -119,5 +137,4 @@ angular.module('menuApp').filter('searchfilter', function($sce) {
 
     return $sce.trustAsHtml(text)
 }
-
 }); 
