@@ -1,54 +1,61 @@
-li:hover{
-	background-color: lightgray;
-
+li:hover {
+    background-color: lightgray;
+    cursor: pointer;
 }
-
-li, input[type=text] {
-	color:#000;
+li,
+input[type=text] {
+    color: #000;
 }
-
+input[type=text] {
+    width: 100%;
+    !important
+}
+ul {
+    list-style: none;
+}
+td {
+    border-left: 1px solid #ccc;
+}
 .highlighted {
-   background-color: yellow;
-}
-
-.record {
-    ´sheight: 25px;
-    
-    smargin: 10px;
-    spadding: 10px;
-    swidth: 200px;
+    background-color: yellow;
 }
 .record-highlight {
     sheight: 50px;
-    background-color: lightgray;
+    background-color: #C9CDF0;
     smargin: 10px;
     spadding: 10px;
     swidth: 200px;
     solor: #fff;
 }
-
-
+.dropdown-menu {
+    overflow: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 80vh;
+}
 
 /* override bootsrap lame borders and radius on the buttons */
-.btn
-{	border:none;
-    outline:0px !important;
-    -wsebkit-appearance:none;
+.btn {
+    border: none;
+    outline: 0px !important;
+    -wsebkit-appearance: none;
 }
-.btn:hover
-{	
+.btn:hover {
     -webkit-border-radius: 0px;
-	-moz-border-radius: 0px;
-	-o-border-radius: 0px;
-	border-radius: 0px;
-	border: 0px;
+    -moz-border-radius: 0px;
+    -o-border-radius: 0px;
+    border-radius: 0px;
+    border: 0px;
 }
-
-/* use these colors */
-
-/*
-* menu color :#4b89b2;
-* text color :#e9e9e9;
-* background :#ccc;
-*
-*/
+.table {
+    color: #000;
+    border-collapse: collapse;
+    border-bottom: 1px solid #ccc;
+}
+#orga-id {
+    color: #646FE8;
+    font-weight: bold;
+}
+.content {
+    font-weight: normal;
+}

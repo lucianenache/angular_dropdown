@@ -1,51 +1,61 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"">
-	<meta charset="utf-8" />
-	<title>insert_title_here</title>
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
-
-	<script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-	<link rel="stylesheet" href="css/style.css" />
-
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.5/angular-sanitize.js"></script>
-</head>
-
-<body ng-app="menuApp">
-	<div class="container bg-primary" ng-controller="menuController">
-
-		<span>PODIO</span>
-		<div class="btn-group">
-
-			<!--button type="button no-border" class="btn">Home</button-->
-			<a class="btn btn-large btn-primary" href="#"> home </a>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"">
+		<meta charset="utf-8" />
+		<title>insert_title_here</title>
+		<script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+		<link rel="stylesheet" href="css/style.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.5/angular-sanitize.js"></script>
+		<script data-require="ng-table@*" data-semver="0.3.0" src="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.js"></script>
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<link data-require="ng-table@*" data-semver="0.3.0" rel="stylesheet" href="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.css" />
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+	</head>
+	<body ng-app="menuApp">
+		<div class="container bg-primary" ng-controller="menuController">
+			<span>PODIO</span>
 			<div class="btn-group">
-				<div class="button" ng-keydown="onKeydown(item, $event)" key-trap>
-
-					<a class="btn btn-large btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-						menu
-						<span class="glyphicon glyphicon-chevron-down"></span>
-					</a>
-
-					<ul class="dropdown-menu" >
-						<input type="text" ng-model="search.title" my-input>
-
-        				<li ng-repeat="item in data | filter:search.title"
-            		    ng-bind-html="item.title | searchfilter:search.title"
-            		    ng-class="{'record-highlight': $index == focusIndex }"
-            		    >
-
-        				</li>
-					</ul>
-				</div>	
-			</div>	
-		</div>
-	</div><!-- /.container -->
-	<script src="js/menuApp.js"></script>
-</body>
-</html>
+				
+				<a class="btn btn-large btn-primary" href="#"> home </a>
+				
+				<div class="btn-group">
+					<div class="button" key-trap>
+						<a class="btn btn-large btn-primary dropdown-toggle" ng-click="displayFirst()" data-toggle="dropdown" href="#">
+							menu
+							<span class="glyphicon glyphicon-chevron-down"></span>
+						</a>
+						<ul class="dropdown-menu" role="menu" >
+							<input type="text" ng-model="search.spaceName" my-input/>
+							<table ng-table="tableParams" class="table">
+								<tr ng-repeat="organization in data" >
+									<td data-title="''">{{organization.logo}}</td>
+									<td data-title="''" id="orga-id">{{organization.name}}
+										<div class="content">
+										<ul>
+											<li  ng-repeat="space in organization.spaces | searchfilter:this:search.spaceName:$index"
+												ng-bind-html="space.name | highlightfilter:search.spaceName"
+												ng-class="{'record-highlight': ($parent.$index == currentParent(focusIndex,$index) && $index == focusIndex)}"
+												ng-click="open($index, $parent.$index)" >
+											</li>
+										</ul>
+									</div>
+									</td>
+								</tr>
+							</table>
+							</u>
+						</div>
+						
+					</div>
+					<!-- end second test -->
+				</div>
+			</div>
+			</div><!-- /.container -->
+			<script src="js/menuApp.js"></script>
+			<script src="js/components/menuService.js"></script>
+			<script src="js/components/menuController.js"></script>
+			<script src="js/components/menuDirective.js"></script>
+			<script src="js/components/menuFilter.js"></script>
+		</body>
+	</html>
