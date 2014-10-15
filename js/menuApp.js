@@ -4,13 +4,32 @@ angular.module('menuApp', ['menuApp.services', 'menuApp.controllers', 'menuApp.d
 angular.module('menuApp.controllers', []).controller('menuController', function($scope,menuService) {
 
   $scope.focusIndex = 0;
-
-
+  $scope.datas = [];
 
     menuService.loadOutput(function(dataResponse) {
-        $scope.data = dataResponse;
+        //$scope.data = dataResponse;
+        $scope.datas = dataResponse;
+        $scope.data = $scope.datas;
+        copyArr($scope.filteredArrays, $scope.datas);
         //console.log("inside service",JSON.stringify(datai));
     });
+
+    function copyArr(a,b){
+      var i,
+          j,
+          k;
+
+      for(i=0;i<b;i++){
+        for(j=0;j<b[i].spaces.length;j++){
+          for(k=0;k<a.length;k++){
+            if(a[k].id == b[i].spaces[j].id)
+              //build $scope object from scratch when filtered - if filter not empty otherwise display all of them
+              console.log(b[i].name,datas[i].spaces[j]);
+          }
+        }
+      }   
+      //match all objects present in b that hava a.name = b.item.name ->
+    }
 
   $scope.open = function (i,j){
     console.log("called item: "+$scope.data[j].spaces[i].name);
@@ -35,6 +54,7 @@ angular.module('menuApp.controllers', []).controller('menuController', function(
       $scope.$apply();
     });
   });
+
     
   
   $scope.filteredArrays = [];
@@ -101,30 +121,46 @@ angular.module('menuApp.directives').directive('keyTrap', function() {
   };
 }); 
 
+
 angular.module('menuApp').filter('order', function() {
 
  return function(array, scope, string, parentIndex) {
+    var filteredArray = []; 
+
+
+    function copyArr(a,b){
+      var i,
+          j,
+          k;
+
+      for(i=0;i<b.length;i++){
+        for(j=0;j<b[i].spaces.length;j++){
+          for(k=0;k<a.length;k++){
+            if(a[k].id == b[i].spaces[j].id)
+              //build $scope object from scratch when filtered - if filter not empty otherwise display all of them
+              console.log(b[i].name,datas[i].spaces[j]);
+          }
+        }
+      }   
+    }
+
   //console.log(scope,array,string,parentIndex);
-  var filteredArray = []; 
-
-  if(string !== null && string !== undefined){
-
-    for(var i=0; i< array.length; i++ ){
-     // console.log("i and string: ",i,string);
-
+  
+  if(string !== null && string !== undefined){ /* if we can filter on a string, create filtered array of spaces for one organization */
+    for(var i=0; i<array.length; i++){
       if(array[i].name.indexOf(string) !== -1){
 
         filteredArray.push(array[i]);
       }
     }
-  } else {
+  } else {                                      /* else it means there is no filter so provide the whole array */                                 
     filteredArray = array;
   }
 
-  //console.log(parentIndex + ":filteredArray",filteredArray);
-  //scope.focusIndex = filteredArrays[];
+  // create the array for that organization
   scope.filteredArrays[parentIndex] = filteredArray;
-
+  //build data object and set it to the view for the users - easy index easy win
+  scope.data = copyArr(scope.filteredArrays,scope.datas);
   return filteredArray;
 }
 }); 
