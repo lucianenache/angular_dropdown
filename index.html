@@ -20,25 +20,24 @@
 				
 				<a class="btn btn-large btn-primary" href="#"> home </a>
 				
-				<div class="btn-group" >
+				<div class="btn-group">
 					<div class="button" key-trap>
 						<a class="btn btn-large btn-primary dropdown-toggle" ng-click="displayFirst()" data-toggle="dropdown" href="#">
 							menu
 							<span class="glyphicon glyphicon-chevron-down"></span>
 						</a>
 						<ul class="dropdown-menu" role="menu" >
-							<input type="text" ng-model="search.spaceName" my-input>
+							<input type="text" ng-model="search.spaceName" my-input/>
 							<table ng-table="tableParams" class="table">
 								<tr ng-repeat="organization in data" >
 									<td data-title="''">{{organization.logo}}</td>
 									<td data-title="''" id="orga-id">{{organization.name}}
 										<div class="content">
-										<ul >
-											<li ng-repeat="space in organization.spaces | order:this:search.spaceName:$index"
-												ng-keydown="onKeydown(space, $event, $parent.$index)"
-												ng-bind-html="space.name | searchfilter:search.spaceName"
+										<ul>
+											<li  ng-repeat="space in organization.spaces | searchfilter:this:search.spaceName:$index"
+												ng-bind-html="space.name | highlightfilter:search.spaceName"
 												ng-class="{'record-highlight': ($parent.$index == currentParent(focusIndex,$index) && $index == focusIndex)}"
-												ng-click="open($index, $parent.$index)">
+												ng-click="open($index, $parent.$index)" >
 											</li>
 										</ul>
 									</div>
@@ -54,7 +53,9 @@
 			</div>
 			</div><!-- /.container -->
 			<script src="js/menuApp.js"></script>
-			<script src="js/components/menuController.js"></script>
 			<script src="js/components/menuService.js"></script>
+			<script src="js/components/menuController.js"></script>
+			<script src="js/components/menuDirective.js"></script>
+			<script src="js/components/menuFilter.js"></script>
 		</body>
 	</html>
