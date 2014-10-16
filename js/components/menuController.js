@@ -3,10 +3,11 @@ angular.module('menuApp').controller('menuController', function($scope,menuServi
   $scope.focusIndex = 0;      // this one is used to determine the current item to highlight
   $scope.filteredArrays = []; // should containt a copy of the original data with only the filtered items
   var parentIndex = 0;                // initialize parentArray index 
- 
+  var mainData = [];
   // load json data
   menuService.loadOutput(function(dataResponse) {
       $scope.data = dataResponse;
+      mainData = $scope.data;
   });
 
 
@@ -22,7 +23,16 @@ angular.module('menuApp').controller('menuController', function($scope,menuServi
   // init the highlight on the first element
   $scope.displayFirst = function() {$scope.focusIndex = 0;}
   
-
+  $scope.$watch('searchSpaceName',function(searchSpaceName,$scope){
+    //console.log('text changed1 ',searchSpaceName);
+    if(searchSpaceName != undefined || searchSpaceName != null || searchSpaceName != ''){
+      console.log('text changed1 ',mainData,  searchSpaceName);
+      data = searchFilter(mainData, $scope, searchSpaceName, -1);
+      console.log('text changed2 ',data);
+      //$scope.$apply();
+    }
+    data = mainData;
+  });
    
  $scope.$on('keydown', function( msg, obj ) {
   // the focus index is the original one and not the one of the filtered list - must fix
@@ -49,27 +59,27 @@ angular.module('menuApp').controller('menuController', function($scope,menuServi
   // 1 0 2 1
   $scope.currentParent = function (focusIndex,currentIndex){
     
-    var parMax =  $scope.filteredArrays.length-1;
-    console.log( $scope.focusIndex,parentIndex, $scope.filteredArrays[parentIndex].length,parMax);
+    var parMax =  $scope.data.length-1;
+    console.log($scope.focusIndex, parentIndex, $scope.data[parentIndex].length, parMax);
   
 
     if(focusIndex < 0 && parentIndex > 0){
-      $scope.focusIndex = $scope.filteredArrays[parentIndex-1].length-1;
-      console.log($scope.filteredArrays[parentIndex-1].length);console.log("enter 1");
+      $scope.focusIndex = $scope.data[parentIndex-1].length-1;
+      console.log($scope.data[parentIndex-1].length);console.log("enter 1");
       parentIndex -=1;
       return paparentIndexr;
     } else
     if(focusIndex < 0 && parentIndex === 0){
-      $scope.focusIndex = $scope.filteredArrays[parMax].length-1;
+      $scope.focusIndex = $scope.data[parMax].length-1;
       parentIndex = parMax;console.log("enter 2");
       return parentIndex;
     } else 
-    if(parentIndex==parMax && focusIndex > $scope.filteredArrays[parMax].length-1){
+    if(parentIndex==parMax && focusIndex > $scope.data[parMax].length-1){
       parentIndex = 0;console.log("enter 3");
       $scope.focusIndex = 0;
       return parentIndex;
     }else
-    if(focusIndex == $scope.filteredArrays[parentIndex].length){
+    if(focusIndex == $scope.data[parentIndex].length){
       console.log("enter 4");
       $scope.focusIndex = 0;
       parentIndex += 1;

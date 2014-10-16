@@ -1,5 +1,7 @@
 'use strict';
-angular.module('menuApp', ['ngSanitize']);
+var app = angular.module('menuApp', ['ngSanitize']);
+
+
 
 
 
