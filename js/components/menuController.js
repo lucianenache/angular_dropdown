@@ -1,4 +1,4 @@
-angular.module('menuApp').controller('menuController', function($scope,menuService,searchFilter) {
+angular.module('menuApp').controller('menuController', function($window, $scope,menuService,searchFilter) {
 
   $scope.focusIndex = 0;      // this one is used to determine the current item to highlight
   $scope.filteredArrays = []; // should containt a copy of the original data with only the filtered items
@@ -15,7 +15,7 @@ angular.module('menuApp').controller('menuController', function($scope,menuServi
     // find corresponding space name - lookup to find real indexes
     // Enter/Return should go to the link of the active element. 
     // maybe use a different way to store the data - uniquer array ?
-
+        $window.open($scope.data[parentIndex].spaces[focusInd].url);
     console.log("called item: "+$scope.data[parentIndex].spaces[focusInd].name);
   } 
 
