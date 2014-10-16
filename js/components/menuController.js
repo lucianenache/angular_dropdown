@@ -57,7 +57,7 @@ angular.module('menuApp').controller('menuController', function($scope,menuServi
       $scope.focusIndex = $scope.filteredArrays[parentIndex-1].length-1;
       console.log($scope.filteredArrays[parentIndex-1].length);console.log("enter 1");
       parentIndex -=1;
-      return paparentIndexr;
+      return parentIndex;
     } else
     if(focusIndex < 0 && parentIndex === 0){
       $scope.focusIndex = $scope.filteredArrays[parMax].length-1;
