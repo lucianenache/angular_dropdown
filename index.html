@@ -34,8 +34,8 @@
 									<td data-title="''" id="orga-id">{{organization.name}}
 										<div class="content">
 										<ul>
-											<li  ng-repeat="space in organization.spaces | searchfilter:this:search.spaceName:$index"
-												ng-bind-html="space.name | highlightfilter:search.spaceName"
+											<li ng-repeat="space in organization.spaces | search:this:search.spaceName:$index"
+												ng-bind-html="space.name | highlight:search.spaceName"
 												ng-class="{'record-highlight': ($parent.$index == currentParent(focusIndex,$index) && $index == focusIndex)}"
 												ng-click="open($index, $parent.$index)" >
 											</li>

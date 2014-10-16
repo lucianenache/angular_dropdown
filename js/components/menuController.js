@@ -1,4 +1,4 @@
-angular.module('menuApp').controller('menuController', function($scope,menuService) {
+angular.module('menuApp').controller('menuController', function($scope,menuService,searchFilter) {
 
   $scope.focusIndex = 0;      // this one is used to determine the current item to highlight
   $scope.filteredArrays = []; // should containt a copy of the original data with only the filtered items
